@@ -3,9 +3,10 @@
 
 
 Game::Game(const int& fps) :
-	_framesPerSecond(fps)
+	_framesPerSecond(fps),
+	_ship()
 {
-	_window.create({ 1000, 800, 32 }, "Asteroids");
+	_window.create({ 1200, 800, 32 }, "Asteroids");
 	FreeConsole();
 }
 Game::~Game()
@@ -58,5 +59,8 @@ void Game::Update()
 }
 void Game::Render()
 {
-
+	_window.clear(sf::Color::Black);
+	
+	_window.draw(_ship.Ship());
+	_window.display();
 }
