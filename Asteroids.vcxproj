@@ -144,6 +144,7 @@
     <ClCompile Include="Starship.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Const.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Starship.h" />
   </ItemGroup>

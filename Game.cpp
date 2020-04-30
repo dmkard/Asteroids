@@ -1,13 +1,14 @@
 #include "Game.h"
 #include <Windows.h>
+#include <iostream>
 
-
-Game::Game(const int& fps) :
-	_framesPerSecond(fps),
+Game::Game():
+	_framesPerSecond(FPS),
 	_ship()
 {
-	_window.create({ 1200, 800, 32 }, "Asteroids");
-	FreeConsole();
+	_frameTime = 1000 / FPS;
+	_window.create({ WNDWIDTH, WNDHEIGHT, 32 }, TITLE);
+	//FreeConsole();
 }
 Game::~Game()
 {
@@ -18,15 +19,17 @@ void Game::Run()
 	sf::Clock clock;
 	sf::Time endFrameTime;
 	_running = true;
+	int count = 0;
 	while (_running)
 	{	
+		count++;
 		clock.restart();
 		HandleInput();
 		Update();
 		Render();
-
+		std::cout << count << std::endl;
 		endFrameTime = clock.getElapsedTime();
-		if (endFrameTime.asMicroseconds() < _frameTime)
+		if (endFrameTime.asMilliseconds() < _frameTime)
 			sf::sleep(sf::milliseconds(_frameTime - endFrameTime.asMilliseconds()));
 	}
 }
@@ -44,18 +47,18 @@ void Game::HandleInput()
 
 		case sf::Event::KeyPressed:
 		{
-			switch (event.key.code)
-			{
-
-			}
+			_ship.OnEvent(event);
+			break;
 		}
+		default:
+			break;
 		};
 
 	}
 }
 void Game::Update()
 {
-
+	_ship.Update();
 }
 void Game::Render()
 {
