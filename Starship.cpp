@@ -4,8 +4,7 @@
 
 Starship::Starship():
 	_speed({ .0f, .0f }),
-	_acceleration({ .0f, .0f }),
-	_rotateAngle(0)
+	_acceleration({ .0f, .0f })
 {
 	if (!_shipTexture.loadFromFile("model.png"))
 		exit(EXIT_FAILURE);
@@ -53,11 +52,11 @@ void Starship::Update()
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		_ship.rotate(10);
+		_ship.rotate(2);
 
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		_ship.rotate(-10);
+		_ship.rotate(-2);
 
 	_ship.move({ _speed.x, _speed.y });
 	
