@@ -1,11 +1,13 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "Const.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 class Starship
 {
 public:
 	Starship();
-	void OnEvent(sf::Event event);
 	void Update();
 	sf::ConvexShape Ship() { return _ship; }
 
@@ -14,7 +16,6 @@ private:
 	sf::Texture _shipTexture;
 	sf::Vector2f _speed;
 	sf::Vector2f _acceleration;
-	float _rotateAngle;
 
 };
 

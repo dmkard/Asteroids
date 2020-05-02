@@ -1,3 +1,4 @@
+
 #include "Starship.h"
 #include <iostream>
 
@@ -23,17 +24,6 @@ Starship::Starship():
 	_ship.setTexture(&_shipTexture);
 }
 
-void Starship::OnEvent(sf::Event event)
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		_speed.y += -0.1;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		_speed.y += 0.1;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		_speed.x += 0.1;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		_speed.x += -0.1;
-}
 
 void Starship::Update()
 {
@@ -48,7 +38,28 @@ void Starship::Update()
 		_ship.setPosition({ _ship.getPosition().x, WNDHEIGHT });
 
 
-	sf::Vector2f position = _ship.getPosition();
-	position += {_speed.x, _speed.y};
-	_ship.setPosition(position);
+	float rot = _ship.getRotation();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		std::cout << rot << std::endl;
+		_speed.x += sin(rot * M_PI / 180);
+		_speed.y -= cos(rot * M_PI / 180);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		_speed.x -= sin(rot * M_PI / 180);
+		_speed.y += cos(rot * M_PI / 180);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		_ship.rotate(10);
+
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		_ship.rotate(-10);
+
+	_ship.move({ _speed.x, _speed.y });
+	
+
 }

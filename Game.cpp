@@ -8,6 +8,7 @@ Game::Game():
 {
 	_frameTime = 1000 / FPS;
 	_window.create({ WNDWIDTH, WNDHEIGHT, 32 }, TITLE);
+	_window.setKeyRepeatEnabled(true);
 	//FreeConsole();
 }
 Game::~Game()
@@ -19,15 +20,12 @@ void Game::Run()
 	sf::Clock clock;
 	sf::Time endFrameTime;
 	_running = true;
-	int count = 0;
 	while (_running)
 	{	
-		count++;
 		clock.restart();
 		HandleInput();
 		Update();
 		Render();
-		std::cout << count << std::endl;
 		endFrameTime = clock.getElapsedTime();
 		if (endFrameTime.asMilliseconds() < _frameTime)
 			sf::sleep(sf::milliseconds(_frameTime - endFrameTime.asMilliseconds()));
@@ -45,15 +43,9 @@ void Game::HandleInput()
 			_running = false;
 			break;
 
-		case sf::Event::KeyPressed:
-		{
-			_ship.OnEvent(event);
-			break;
-		}
 		default:
 			break;
 		};
-
 	}
 }
 void Game::Update()
@@ -63,7 +55,6 @@ void Game::Update()
 void Game::Render()
 {
 	_window.clear(sf::Color::Black);
-	
 	_window.draw(_ship.Ship());
 	_window.display();
 }
