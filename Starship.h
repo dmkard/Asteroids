@@ -16,6 +16,5 @@ private:
 	sf::Texture _shipTexture;
 	sf::Vector2f _speed;
 	sf::Vector2f _acceleration;
-
 };
 
