@@ -9,7 +9,6 @@ Game::Game():
 	_frameTime = 1000 / FPS;
 	_window.create({ WNDWIDTH, WNDHEIGHT, 32 }, TITLE);
 	_window.setKeyRepeatEnabled(true);
-	//FreeConsole();
 }
 Game::~Game()
 {
@@ -20,20 +19,23 @@ void Game::Run()
 	sf::Clock clock; //count time of frame
 	sf::Time endFrameTime;
 	_running = true;
+	int frameCounter = 0;
 	while (_running)
 	{	
 		clock.restart(); //clock equels 0 at this point
-		HandleInput();
+
+		HandleInput(frameCounter);
 		Update();
 		Render();
 		endFrameTime = clock.getElapsedTime(); //get elated time from beginning of frame
 		if (endFrameTime.asMilliseconds() < _frameTime)
 			sf::sleep(sf::milliseconds(_frameTime - endFrameTime.asMilliseconds()));  
+		frameCounter++;
 	}
 }
 
 //this function handle close event
-void Game::HandleInput()
+void Game::HandleInput(int frameCounter)
 {
 	sf::Event event;
 	while (_window.pollEvent(event))
@@ -47,14 +49,33 @@ void Game::HandleInput()
 			break;
 		};
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		_bullets.push_back(Bullet(_ship.Ship().getPosition(), _ship.Ship().getRotation()));
+	if (frameCounter % 10 == 0)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			_bullets.push_back(Bullet(_ship.Ship().getPosition(), _ship.Ship().getRotation()));
+	}
+	
 }
 void Game::Update()
 {
 	_ship.Update();
-	for (auto &bullet : _bullets)
-		bullet.Update();
+
+	std::list<Bullet>::iterator it = _bullets.begin();
+	while ( it != _bullets.end())
+	{
+		if ((*it).Location().x + 6 < 0 ||
+			(*it).Location().x - 6 > WNDWIDTH ||
+			(*it).Location().y + 6 < 0 ||
+			(*it).Location().y - 6 > WNDHEIGHT)
+		{
+			_bullets.erase(it++);
+		}
+		else
+		{
+			(*it).Update();
+			it++;
+		}
+	}
 }
 void Game::Render()
 {

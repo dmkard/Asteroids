@@ -3,8 +3,7 @@
 #include <iostream>
 
 Starship::Starship():
-	_speed({ .0f, .0f }),
-	_acceleration({ .0f, .0f })
+	_speed({ .0f, .0f })
 {
 	if (!_shipTexture.loadFromFile("model.png"))
 		exit(EXIT_FAILURE);
