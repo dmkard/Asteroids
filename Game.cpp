@@ -19,24 +19,24 @@ void Game::Run()
 	sf::Clock clock; //count time of frame
 	sf::Time endFrameTime;
 	_running = true;
-	int frameCounter = 0;
 	while (_running)
 	{	
 		clock.restart(); //clock equels 0 at this point
 
-		HandleInput(frameCounter);
+		HandleInput();
 		Update();
 		Render();
 		endFrameTime = clock.getElapsedTime(); //get elated time from beginning of frame
 		if (endFrameTime.asMilliseconds() < _frameTime)
 			sf::sleep(sf::milliseconds(_frameTime - endFrameTime.asMilliseconds()));  
-		frameCounter++;
 	}
 }
 
 //this function handle close event
-void Game::HandleInput(int frameCounter)
+void Game::HandleInput()
 {
+	static sf::Clock clock; 
+	sf::Time time = clock.getElapsedTime();
 	sf::Event event;
 	while (_window.pollEvent(event))
 	{
@@ -49,12 +49,14 @@ void Game::HandleInput(int frameCounter)
 			break;
 		};
 	}
-	if (frameCounter % 10 == 0)
+	if (time.asMilliseconds() > 200)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
 			_bullets.push_back(Bullet(_ship.Ship().getPosition(), _ship.Ship().getRotation()));
+			clock.restart();
+		}
 	}
-	
 }
 void Game::Update()
 {

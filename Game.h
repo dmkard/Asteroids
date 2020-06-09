@@ -15,7 +15,7 @@ public:
 	Game();
 	~Game();
 	void Run();
-	void HandleInput(int frameCounter);
+	void HandleInput();
 	void Update();
 	void Render();
 private:
