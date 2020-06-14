@@ -11,7 +11,8 @@ public:
 
 private:
 	sf::ConvexShape _asteroid;
-	float _scale;
+	float _scale; //value between 0,5 and 1,5
+	int _direction{ 0 }; //in degrees
 
 };
 

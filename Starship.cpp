@@ -42,8 +42,8 @@ void Starship::Update()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		std::cout << rot << std::endl;
-		_speed.x += sin(rot * M_PI / 180) * 0.2;
-		_speed.y -= cos(rot * M_PI / 180) * 0.2;
+		_speed.x += sin(rot * M_PI / 180) * 0.3;
+		_speed.y -= cos(rot * M_PI / 180) * 0.3;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{

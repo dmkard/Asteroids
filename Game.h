@@ -5,6 +5,7 @@
 #include "Const.h"
 #include "Bullet.h"
 #include "Asteroid.h"
+#include "Interface.h"
 
 
 /*
@@ -22,11 +23,14 @@ public:
 private:
 	sf::RenderWindow _window;
 	Starship _ship;
+	Interface _interface;
 	bool _running{ false };
 	int _framesPerSecond;
 	int _frameTime;
+	int _score;
 	std::list<Bullet> _bullets;
 	std::list<Asteroid> _asteroids;
+
 
 };
 

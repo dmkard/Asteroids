@@ -1,11 +1,14 @@
 #include "Game.h"
 #include <Windows.h>
 #include <iostream>
+#include <random>
 
 Game::Game():
 	_framesPerSecond(FPS),
-	_ship()
+	_ship(),
+	_interface()
 {
+	_score = 0;
 	_frameTime = 1000 / FPS;
 	_window.create({ WNDWIDTH, WNDHEIGHT, 32 }, TITLE);
 	_window.setKeyRepeatEnabled(true);
@@ -79,40 +82,37 @@ void Game::Update()
 			(*it).Update();
 			it++;
 		}
+
+		if()
 	}
 
-	if (time.asMilliseconds() > 4000)
+	if (time.asMilliseconds() > 400)
 	{
-		_asteroids.clear();
 		_asteroids.push_back(Asteroid());
 		clock.restart();
-
 	}
-	
-
 
 	std::list<Asteroid>::iterator it2 = _asteroids.begin();
-	/*while (it2 != _asteroids.end())
+	while (it2 != _asteroids.end())
 	{
-		if ((*it).Location().x + 6 < 0 ||
-			(*it).Location().x - 6 > WNDWIDTH ||
-			(*it).Location().y + 6 < 0 ||
-			(*it).Location().y - 6 > WNDHEIGHT)
+		if (
+			(*it2).Location().x + 80 < 0 ||
+			(*it2).Location().x - 80 > WNDWIDTH ||
+			(*it2).Location().y + 80 < 0 ||
+			(*it2).Location().y - 80 > WNDHEIGHT
+			)
 		{
-			_bullets.erase(it++);
+			_asteroids.erase(it2++);
 		}
 		else
 		{
-			(*it).Update();
-			it++;
+			(*it2).Update();
+			it2++;
 		}
-	}*/
-
-
-
-
-
+	}
+	_interface.Update();
 }
+
 void Game::Render()
 {
 	_window.clear(sf::Color::Black);
@@ -122,6 +122,6 @@ void Game::Render()
 
 	for (auto& asteroid : _asteroids)
 		_window.draw(asteroid.Shape());
-
+	_window.draw(_interface);
 	_window.display();
 }
