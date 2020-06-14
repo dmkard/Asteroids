@@ -4,6 +4,7 @@
 #include "Starship.h"
 #include "Const.h"
 #include "Bullet.h"
+#include "Asteroid.h"
 
 
 /*
@@ -25,6 +26,7 @@ private:
 	int _framesPerSecond;
 	int _frameTime;
 	std::list<Bullet> _bullets;
+	std::list<Asteroid> _asteroids;
 
 };
 

@@ -61,6 +61,8 @@ void Game::HandleInput()
 void Game::Update()
 {
 	_ship.Update();
+	static sf::Clock clock;
+	sf::Time time = clock.getElapsedTime();
 
 	std::list<Bullet>::iterator it = _bullets.begin();
 	while ( it != _bullets.end())
@@ -78,6 +80,38 @@ void Game::Update()
 			it++;
 		}
 	}
+
+	if (time.asMilliseconds() > 4000)
+	{
+		_asteroids.clear();
+		_asteroids.push_back(Asteroid());
+		clock.restart();
+
+	}
+	
+
+
+	std::list<Asteroid>::iterator it2 = _asteroids.begin();
+	/*while (it2 != _asteroids.end())
+	{
+		if ((*it).Location().x + 6 < 0 ||
+			(*it).Location().x - 6 > WNDWIDTH ||
+			(*it).Location().y + 6 < 0 ||
+			(*it).Location().y - 6 > WNDHEIGHT)
+		{
+			_bullets.erase(it++);
+		}
+		else
+		{
+			(*it).Update();
+			it++;
+		}
+	}*/
+
+
+
+
+
 }
 void Game::Render()
 {
@@ -85,5 +119,9 @@ void Game::Render()
 	_window.draw(_ship.Ship());
 	for (auto& bullet : _bullets)
 		_window.draw(bullet.Shape());
+
+	for (auto& asteroid : _asteroids)
+		_window.draw(asteroid.Shape());
+
 	_window.display();
 }
