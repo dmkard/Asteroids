@@ -8,6 +8,7 @@ public:
 	void Update();
 	sf::ConvexShape Shape() { return _asteroid; }
 	sf::Vector2f Location() { return _asteroid.getPosition(); }
+	float Radius() { return 30 * _scale; }
 
 private:
 	sf::ConvexShape _asteroid;

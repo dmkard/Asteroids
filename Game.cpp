@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <random>
+#include <math.h>
 
 Game::Game():
 	_framesPerSecond(FPS),
@@ -67,23 +68,21 @@ void Game::Update()
 	static sf::Clock clock;
 	sf::Time time = clock.getElapsedTime();
 
-	std::list<Bullet>::iterator it = _bullets.begin();
-	while ( it != _bullets.end())
+	std::list<Bullet>::iterator itBull = _bullets.begin();
+	while ( itBull != _bullets.end())
 	{
-		if ((*it).Location().x + 6 < 0 ||
-			(*it).Location().x - 6 > WNDWIDTH ||
-			(*it).Location().y + 6 < 0 ||
-			(*it).Location().y - 6 > WNDHEIGHT)
+		if ((*itBull).Location().x + 6 < 0 ||
+			(*itBull).Location().x - 6 > WNDWIDTH ||
+			(*itBull).Location().y + 6 < 0 ||
+			(*itBull).Location().y - 6 > WNDHEIGHT)
 		{
-			_bullets.erase(it++);
+			_bullets.erase(itBull++);
 		}
 		else
 		{
-			(*it).Update();
-			it++;
+			(*itBull).Update();
+			itBull++;
 		}
-
-		if()
 	}
 
 	if (time.asMilliseconds() > 400)
@@ -92,25 +91,55 @@ void Game::Update()
 		clock.restart();
 	}
 
-	std::list<Asteroid>::iterator it2 = _asteroids.begin();
-	while (it2 != _asteroids.end())
+	std::list<Asteroid>::iterator itAst = _asteroids.begin();
+	while (itAst != _asteroids.end())
 	{
 		if (
-			(*it2).Location().x + 80 < 0 ||
-			(*it2).Location().x - 80 > WNDWIDTH ||
-			(*it2).Location().y + 80 < 0 ||
-			(*it2).Location().y - 80 > WNDHEIGHT
+			(*itAst).Location().x + 80 < 0 ||
+			(*itAst).Location().x - 80 > WNDWIDTH ||
+			(*itAst).Location().y + 80 < 0 ||
+			(*itAst).Location().y - 80 > WNDHEIGHT
 			)
 		{
-			_asteroids.erase(it2++);
+			_asteroids.erase(itAst++);
 		}
 		else
 		{
-			(*it2).Update();
-			it2++;
+			(*itAst).Update();
+			itAst++;
 		}
 	}
-	_interface.Update();
+
+	bool colision;
+	itBull = _bullets.begin();
+	while (itBull != _bullets.end())
+	{
+		colision = false;
+		itAst = _asteroids.begin();
+		while (itAst != _asteroids.end())
+		{
+			double distance = sqrt(pow((*itAst).Location().x - (*itBull).Location().x, 2) 
+									+ pow((*itAst).Location().y - (*itBull).Location().y, 2));
+			if ((*itAst).Radius() > distance)
+			{
+				_score +=  (2 - (*itAst).Radius() / 30) * 100;
+				_asteroids.erase(itAst++);
+				_bullets.erase(itBull++);
+				colision = true;
+				break;
+			}
+			else
+			{
+				itAst++;
+			}
+		}
+		if (!colision)
+			itBull++;
+	}
+
+
+
+	_interface.Update(_score);
 }
 
 void Game::Render()

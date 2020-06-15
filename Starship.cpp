@@ -50,26 +50,26 @@ void Starship::Update()
 		_speed.x -= sin(rot * M_PI / 180) * 0.2;
 		_speed.y += cos(rot * M_PI / 180) * 0.2;
 	}
-	else
+	else //if none of buttons UP or DOWN pressed
 	{
 		if (_speed.x != 0)
 		{
 			if (_speed.x < 0.01 && _speed.x > -0.01)
 				_speed.x = 0;
-			_speed.x *= 0.95;
+			_speed.x *= 0.97;
 		}
 		if (_speed.y != 0)
 		{
 			if (_speed.y < 0.01 && _speed.y > -0.01)
 				_speed.y = 0;
-			_speed.y *= 0.95;
+			_speed.y *= 0.97;
 		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		_ship.rotate(4);
+		_ship.rotate(5);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		_ship.rotate(-4);
+		_ship.rotate(-5);
 
 	if (_speed.x > MAXSPEED)
 		_speed.x = MAXSPEED;

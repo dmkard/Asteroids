@@ -6,13 +6,13 @@ class Interface :
 {
 public:
     Interface();
-    void Update();
+    void Update(int score);
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    sf::Text scoreLabel;
-    sf::Text score;
-    sf::Font font;
+    sf::Text _scoreLabel;
+    sf::Text _score;
+    sf::Font _font;
 
 };
 
