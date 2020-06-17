@@ -120,6 +120,7 @@ void Game::Update()
 		{
 			double distance = sqrt(pow((*itAst).Location().x - (*itBull).Location().x, 2) 
 									+ pow((*itAst).Location().y - (*itBull).Location().y, 2));
+
 			if ((*itAst).Radius() > distance)
 			{
 				_score +=  (2 - (*itAst).Radius() / 30) * 100;
@@ -136,9 +137,6 @@ void Game::Update()
 		if (!colision)
 			itBull++;
 	}
-
-
-
 	_interface.Update(_score);
 }
 

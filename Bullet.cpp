@@ -17,7 +17,8 @@ Bullet::Bullet(sf::Vector2f loc, int dir): _direction(dir)
 
 void Bullet::Update()
 {
-	_shape.move({ 10 * sin(_direction * static_cast <float>(M_PI) / 180),  -10 * cos(_direction * static_cast <float>(M_PI) / 180) });
+	_shape.move({ 15 * sin(_direction * static_cast <float>(M_PI) / 180),  
+					-15 * cos(_direction * static_cast <float>(M_PI) / 180) });
 
 
 }

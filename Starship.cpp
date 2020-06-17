@@ -8,7 +8,7 @@ Starship::Starship():
 	if (!_shipTexture.loadFromFile("model.png"))
 		exit(EXIT_FAILURE);
 	sf::Vector2f _shipSize = { static_cast <float> (_shipTexture.getSize().x), static_cast <float> (_shipTexture.getSize().y) };
-	//m_planeTexture.setSmooth(true);
+	_shipTexture.setSmooth(true);
 	_ship.setPointCount(7);
 	_ship.setPoint(0, sf::Vector2f(_shipSize.x, _shipSize.y));
 	_ship.setPoint(1, sf::Vector2f(0, _shipSize.y));
@@ -19,7 +19,6 @@ Starship::Starship():
 	_ship.setPoint(6, sf::Vector2f(_shipSize.x, _shipSize.y - 20));
 	_ship.setOrigin(sf::Vector2f(_shipSize.x / 2, _shipSize.y / 2));
 	_ship.setPosition(WNDWIDTH / 2, WNDHEIGHT / 2);
-	//_ship.setFillColor(sf::Color::Green);
 
 	_ship.setTexture(&_shipTexture);
 }
@@ -41,7 +40,6 @@ void Starship::Update()
 	float rot = _ship.getRotation();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		std::cout << rot << std::endl;
 		_speed.x += sin(rot * M_PI / 180) * 0.3;
 		_speed.y -= cos(rot * M_PI / 180) * 0.3;
 	}
